@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <fstream>
+#include <cstdlib>
 class Btc {
 	private:
 		std::map<std::string, double> ref;
