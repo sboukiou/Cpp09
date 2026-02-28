@@ -27,6 +27,8 @@ int main(int ac, char **av) {
 		std::cout << e.what() << std::endl;
 		std::exit(0);
 	}
+	std::cout << "Declaring the new ref\n";
 	Btc newRef;
+	std::cout << "After Declaring the new ref\n";
 	return (0);
 }

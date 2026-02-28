@@ -3,19 +3,18 @@
 
 #include <map>
 #include <string>
-#include <fstream>
-#include <cstdlib>
-class Btc {
+class BitcoinExchange {
 	private:
 		std::map<std::string, double> ref;
 		std::string fileName;
-		std::ifstream	file;
+		void	loadDataBase(void) const;
 	public:
-		Btc(void);
-		Btc(const std::string &fileName);
-		Btc(const Btc &other);
-		~Btc(void);
-		Btc&	operator=(const Btc &other);
+		BitcoinExchange(void);
+		BitcoinExchange(const std::string &fileName);
+		BitcoinExchange(const BitcoinExchange &other);
+		~BitcoinExchange(void);
+		BitcoinExchange&	operator=(const BitcoinExchange &other);
+		void	processFile(const std::string &path) const;
 
 
 };
