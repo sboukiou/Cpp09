@@ -11,8 +11,7 @@ BitcoinExchange::BitcoinExchange(const std::string &param): fileName(param) {
 	loadDataBase();
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): fileName(other.fileName) {
-	loadDataBase();
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): ref(other.ref), fileName(other.fileName) {
 }
 
 BitcoinExchange::~BitcoinExchange(void) {
@@ -22,7 +21,6 @@ BitcoinExchange::~BitcoinExchange(void) {
 BitcoinExchange&	BitcoinExchange::operator=(const BitcoinExchange &other) {
 	fileName = other.fileName;
 	ref = other.ref;
-	loadDataBase();
 	return (*this);
 }
 
