@@ -51,14 +51,24 @@ void	BitcoinExchange::processFile(const std::string &path) const {
 	if (file.is_open() == false)
 		throw(std::runtime_error("Could not open the text data file!"));
 	std::getline(file, buffer);
-	if (buffer != "date | value")
+	if (buffer != "date | value" && buffer.empty() == false)
 		throw(std::runtime_error("First line invalid! Expected: date | value\n"));
 	while (std::getline(file, buffer)) {
+		if (buffer.empty() == true)
+			continue ;
 		size_t delim = buffer.find("|");
 		if (delim == std::string::npos)
 			throw(std::runtime_error("Invalid line format! '|' Was expected\n"));
 		std::string date = buffer.substr(0, delim);
 		std::string value = buffer.substr(delim + 1,  buffer.size() - delim);
+		if (isValidDate(date) == false) {
+			std::cout << "--- " << date << " ----\n";
+			throw(std::runtime_error("Invalide date!\n"));
+		}
+		if (isValidValue(value) == false) {
+			std::cerr << "Invalid value Given !\n";
+			continue ;
+		}
 
 	}
 }

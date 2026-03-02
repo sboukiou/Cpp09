@@ -19,4 +19,9 @@ class BitcoinExchange {
 
 };
 
+ /* Util Functions */
+
+bool isValidValue(std::string &value);
+bool isValidDate(std::string &param);
+
 #endif /* BITCOIN_EXCHANGE_HPP */
