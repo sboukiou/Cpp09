@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <algorithm>
 BitcoinExchange::BitcoinExchange(void): fileName("data.csv") {
 	loadDataBase();
 }
@@ -40,6 +41,15 @@ void	BitcoinExchange::loadDataBase(void) {
 		else {
 			std::string date = buffer.substr(0, delim);
 			std::string value = buffer.substr(delim + 1,  buffer.size() - delim);
+		if (isValidDate(date) == false) {
+			std::cout << "Error: bad input date => " << date << std::endl;
+			continue ;
+		}
+		if (isValidValue(value) == false) {
+			std::cout << "Error: bad input value => " << value << std::endl;
+			continue ;
+		}
+
 			std::cout << "--> " << date << " " << value << std::endl;
 			ref[date] = std::atof(value.c_str());
 		}
@@ -53,21 +63,23 @@ void	BitcoinExchange::processFile(const std::string &path) const {
 		throw(std::runtime_error("Could not open the text data file!"));
 	std::getline(file, buffer);
 	if (buffer != "date | value" && buffer.empty() == false)
-		throw(std::runtime_error("First line invalid! Expected: date | value\n"));
+		std::cerr << "First line Invalid!\n";
 	while (std::getline(file, buffer)) {
 		if (buffer.empty() == true)
 			continue ;
 		size_t delim = buffer.find("|");
-		if (delim == std::string::npos)
-			throw(std::runtime_error("Invalid line format! '|' Was expected\n"));
+		if (delim == std::string::npos) {
+			std::cout << "Error: bad input => " << buffer << std::endl;
+			continue ;
+		}
 		std::string date = buffer.substr(0, delim);
 		std::string value = buffer.substr(delim + 1,  buffer.size() - delim);
 		if (isValidDate(date) == false) {
-			std::cout << "--- " << date << " ----\n";
-			throw(std::runtime_error("Invalide date!\n"));
+			std::cout << "Error: bad input date => " << date << std::endl;
+			continue ;
 		}
 		if (isValidValue(value) == false) {
-			std::cerr << "Invalid value Given !\n";
+			std::cout << "Error: bad input value => " << value << std::endl;
 			continue ;
 		}
 

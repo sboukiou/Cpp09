@@ -1,5 +1,4 @@
 #include "./BitcoinExchange.hpp"
-#include <iostream>
 #include <string>
 
 
@@ -23,12 +22,11 @@ bool isValidDate(std::string &param) {
 	if (delim == std::string::npos)
 		return (false);
 	month = chunk.substr(0, delim);
-	day = chunk.substr(delim + 1, chunk.size() - delim - 2);
-	// std:: cout << month <<  " " << month.length() << std::endl;
-	// std:: cout << day  << " " << day.length() <<  std::endl;
+	day = chunk.substr(delim + 1, chunk.size() - delim - 1);
+	if (day[day.length() - 1] == ' ')
+		day.erase(2, 1);
 	if (month.length() != 2 || day.length() != 2)
 		return (false);
-	// std::cout << "passed some!\n";
 	for (size_t  i = 0; i < month.length(); i += 1)
 		if (isdigit(month[i]) == false)
 			return (false);
@@ -52,7 +50,6 @@ bool isValidValue(std::string &value) {
 	std::string N;
 	std::string D;
 
-	std::cout << "value: " << value << std::endl;
 	size_t delim = value.find('.');
 	if (delim == std::string::npos) {
 		for (size_t i = 0; i <  value.length(); i += 1)
