@@ -28,7 +28,7 @@ int main(int ac, char **av) {
 		std::exit(0);
 	}
 	std::cout << "Declaring the new ref\n";
-	Btc newRef;
+	BitcoinExchange newRef;
 	std::cout << "After Declaring the new ref\n";
 	return (0);
 }
