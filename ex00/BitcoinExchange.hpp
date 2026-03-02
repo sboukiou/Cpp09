@@ -7,7 +7,7 @@ class BitcoinExchange {
 	private:
 		std::map<std::string, double> ref;
 		std::string fileName;
-		void	loadDataBase(void) const;
+		void	loadDataBase(void);
 	public:
 		BitcoinExchange(void);
 		BitcoinExchange(const std::string &fileName);

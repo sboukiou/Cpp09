@@ -25,7 +25,7 @@ BitcoinExchange&	BitcoinExchange::operator=(const BitcoinExchange &other) {
 	return (*this);
 }
 
-void	BitcoinExchange::loadDataBase(void) const {
+void	BitcoinExchange::loadDataBase(void) {
 
 	std::string buffer;
 
@@ -41,6 +41,7 @@ void	BitcoinExchange::loadDataBase(void) const {
 			std::string date = buffer.substr(0, delim);
 			std::string value = buffer.substr(delim + 1,  buffer.size() - delim);
 			std::cout << "--> " << date << " " << value << std::endl;
+			ref[date] = std::atof(value.c_str());
 		}
 	}
 }
