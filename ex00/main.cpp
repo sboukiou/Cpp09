@@ -1,7 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <cstdlib>
 
 typedef struct data {
@@ -18,7 +17,6 @@ static void testInput(const int &ac, char **av, std::ifstream &file) {
 
 int main(int ac, char **av) {
 	std::ifstream 				file;
-	std::vector<std::string>	content;
 	std::string					line;
 	try {
 		testInput(ac, av, file);
@@ -27,8 +25,9 @@ int main(int ac, char **av) {
 		std::cout << e.what() << std::endl;
 		std::exit(0);
 	}
-	std::cout << "Declaring the new ref\n";
+	std:: cout << "** Loading the DB **\n";
 	BitcoinExchange newRef;
-	std::cout << "After Declaring the new ref\n";
+	newRef.processFile(av[1]);
+	std:: cout << "** Loading the data.txt file **\n";
 	return (0);
 }
