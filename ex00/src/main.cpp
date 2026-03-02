@@ -1,4 +1,4 @@
-#include "BitcoinExchange.hpp"
+#include "../include/BitcoinExchange.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

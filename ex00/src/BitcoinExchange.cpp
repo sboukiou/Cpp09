@@ -1,9 +1,8 @@
-#include "./BitcoinExchange.hpp"
+#include "../include/BitcoinExchange.hpp"
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
-#include <algorithm>
-BitcoinExchange::BitcoinExchange(void): fileName("data.csv") {
+BitcoinExchange::BitcoinExchange(void): fileName("./assets/data.csv") {
 	loadDataBase();
 }
 

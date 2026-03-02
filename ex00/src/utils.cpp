@@ -1,4 +1,4 @@
-#include "./BitcoinExchange.hpp"
+#include "../include/BitcoinExchange.hpp"
 #include <string>
 
 

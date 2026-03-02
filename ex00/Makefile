@@ -1,7 +1,7 @@
 NAME=btc
 CXX=c++
 CPPFLAGS=-Wall -Werror -Wextra -std=c++98
-SRC=main.cpp BitcoinExchange.cpp utils.cpp
+SRC=src/main.cpp src/BitcoinExchange.cpp src/utils.cpp
 OBJ=$(SRC:%.cpp=%.o)
 RM=rm -f
 
