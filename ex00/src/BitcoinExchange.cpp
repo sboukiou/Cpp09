@@ -1,7 +1,6 @@
 #include "../include/BitcoinExchange.hpp"
 #include <fstream>
 #include <iostream>
-#include <cstdlib>
 BitcoinExchange::BitcoinExchange(void): fileName("./assets/data.csv") {
 	loadDataBase();
 }
@@ -24,61 +23,36 @@ BitcoinExchange&	BitcoinExchange::operator=(const BitcoinExchange &other) {
 }
 
 void	BitcoinExchange::loadDataBase(void) {
-
-	std::string buffer;
-
-	std::ifstream file(fileName.c_str());
+	std::ifstream file("./assets/data.csv");
+	std::string buffer("");
 	if (file.is_open() == false)
-		throw(std::runtime_error("Could not open the csv db file!"));
-	std::getline(file, buffer);
+		throw(std::runtime_error("Could not open the DB file\n"));
 	while (std::getline(file, buffer)) {
-		size_t delim = buffer.find(",");
-		if (delim == std::string::npos)
-			std::cerr << "Invalid line, could not find the delimiter\n";
-		else {
-			std::string date = buffer.substr(0, delim);
-			std::string value = buffer.substr(delim + 1,  buffer.size() - delim);
-		if (isValidDate(date) == false) {
-			std::cout << "Error: bad input date => " << date << std::endl;
+		if (buffer == "date,exchange_rate")
 			continue ;
+		try {
+			processLine(ref, buffer, DB);
 		}
-		if (isValidValue(value) == false) {
-			std::cout << "Error: bad input value => " << value << std::endl;
-			continue ;
-		}
-
-			std::cout << "--> " << date << " " << value << std::endl;
-			ref[date] = std::atof(value.c_str());
+		catch (std::exception &e) {
+			std::cout << "Error:" << e.what() << std::endl;
 		}
 	}
+	file.close();
 }
 
-void	BitcoinExchange::processFile(const std::string &path) const {
-	std::string buffer;
+void	BitcoinExchange::processFile(const std::string &path) {
 	std::ifstream file(path.c_str());
+	std::string buffer("");
 	if (file.is_open() == false)
-		throw(std::runtime_error("Could not open the text data file!"));
-	std::getline(file, buffer);
-	if (buffer != "date | value" && buffer.empty() == false)
-		std::cerr << "First line Invalid!\n";
+		throw(std::runtime_error("Could not open the DB file\n"));
 	while (std::getline(file, buffer)) {
-		if (buffer.empty() == true)
+		if (buffer == "date | value")
 			continue ;
-		size_t delim = buffer.find("|");
-		if (delim == std::string::npos) {
-			std::cout << "Error: bad input => " << buffer << std::endl;
-			continue ;
+		try {
+			processLine(data, buffer, DATA);
 		}
-		std::string date = buffer.substr(0, delim);
-		std::string value = buffer.substr(delim + 1,  buffer.size() - delim);
-		if (isValidDate(date) == false) {
-			std::cout << "Error: bad input date => " << date << std::endl;
-			continue ;
+		catch (std::exception &e) {
+			std::cout << "Error:" << e.what() << std::endl;
 		}
-		if (isValidValue(value) == false) {
-			std::cout << "Error: bad input value => " << value << std::endl;
-			continue ;
-		}
-
 	}
 }
