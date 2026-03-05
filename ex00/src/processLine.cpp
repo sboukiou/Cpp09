@@ -31,6 +31,8 @@ static void	parseValue(std::string &value, double &hold) {
 	if (value.empty())
 		throw(std::runtime_error("No value was found"));
 	std::string::const_iterator iter = value.begin();
+	if (occurence(value, '.') > 1)
+		throw(std::runtime_error("Value has to many dots"));
 	while (iter != value.end() && (std::isdigit(*iter) || *iter == '.'))
 		++iter;
 	if (iter != value.end())

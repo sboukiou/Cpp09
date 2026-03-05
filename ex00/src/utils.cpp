@@ -17,3 +17,11 @@ void split(std::string &left, std::string &right, std::string &src, char delim) 
 void trim(std::string& s) {
 	    s.erase(std::remove_if(s.begin(), s.end(), ::isspace), s.end());
 }
+
+size_t occurence(std::string &str, char c) {
+	size_t	count = 0;
+	for (size_t N = 0; N < str.length(); N += 1)
+		if (str[N] == c)
+			count += 1;
+	return (count);
+}

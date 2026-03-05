@@ -32,5 +32,6 @@ bool	isValidDate(std::string &param);
 void	processLine(std::map<std::string, double> &ref, std::string buffer, Type type);
 void trim(std::string& s);
 void split(std::string &left, std::string &right, std::string &src, char delim);
+size_t	occurence(std::string &str, char c);
 
 #endif /* BITCOIN_EXCHANGE_HPP */
