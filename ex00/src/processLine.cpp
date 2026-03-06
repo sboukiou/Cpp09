@@ -1,5 +1,4 @@
 #include "../include/BitcoinExchange.hpp"
-#include <iostream>
 #include <stdexcept>
 #include <cstdlib>
 
