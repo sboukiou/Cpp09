@@ -21,6 +21,7 @@ class BitcoinExchange {
 		~BitcoinExchange(void);
 		BitcoinExchange&	operator=(const BitcoinExchange &other);
 		void	processFile(const std::string &path);
+		void	execute(void);
 
 
 };

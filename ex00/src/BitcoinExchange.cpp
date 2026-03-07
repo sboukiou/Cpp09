@@ -1,4 +1,5 @@
 #include "../include/BitcoinExchange.hpp"
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 BitcoinExchange::BitcoinExchange(void): fileName("./assets/data.csv") {
@@ -54,5 +55,13 @@ void	BitcoinExchange::processFile(const std::string &path) {
 		catch (std::exception &e) {
 			std::cout << "Error:" << e.what() << std::endl;
 		}
+	}
+}
+
+void BitcoinExchange::execute(void) {
+	std::map<std::string, double>::iterator iter = ref.begin();
+	while (iter != ref.end()) {
+		std::cout << iter->first << " => " << iter->second << " = "  << iter->second * data[iter->first] << std::endl;
+		++iter;
 	}
 }

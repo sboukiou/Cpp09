@@ -25,10 +25,11 @@ int main(int ac, char **av) {
 		std::cout << e.what() << std::endl;
 		std::exit(0);
 	}
-	std:: cout << "** Loading the DB **\n";
+	// std:: cout << "** Loading the DB **\n";
 	BitcoinExchange newRef;
-	std:: cout << "** Loading the data.txt file **\n";
+	// std:: cout << "** Loading the data.txt file **\n";
 	newRef.processFile(av[1]);
-	std::cout << "Finished the work\n";
+	newRef.execute();
+	// std::cout << "Finished the work\n";
 	return (0);
 }
