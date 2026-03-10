@@ -3,6 +3,29 @@
 #include <stdexcept>
 #include <cstdlib>
 
+static bool getClosestRate(const std::map<std::string, double>& db,
+                           const std::string& date,
+                           double& rate)
+{
+    std::map<std::string, double>::const_iterator it = db.lower_bound(date);
+
+    if (it != db.end() && it->first == date) {
+        rate = it->second;
+        return true;
+    }
+
+    if (it == db.begin()) {
+        return false;
+    }
+
+    if (it == db.end() || it->first != date) {
+        --it;
+    }
+
+    rate = it->second;
+    return true;
+}
+
 static void	parseDate(std::string &date,
 		std::map<std::string, double>) {
 	std::string year;
@@ -74,7 +97,16 @@ void	processLine(std::map<std::string, double> &ref, std::string buffer, Type ty
 	parseDate(date, ref);
 	parseValue(value, numValue);
 	if (type == DATA) {
-		std::cout << date << " ==> " << value << " = " << numValue * ref[date] << std::endl;
+		if (type == DATA) {
+			double rate;
+			if (!getClosestRate(ref, date, rate)) {
+				throw std::runtime_error("bad input");
+			}
+			std::cout << date << " => " << numValue << " = " << (numValue * rate) << std::endl;
+		}
+		else {
+			ref[date] = numValue;
+		}
 	}
 	else {
 		ref[date] = numValue;
