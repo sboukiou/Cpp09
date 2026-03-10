@@ -11,7 +11,6 @@ enum Type {
 class BitcoinExchange {
 	private:
 		std::map<std::string, double> ref;
-		std::map<std::string, double> data;
 		std::string fileName;
 		void	loadDataBase(void);
 	public:
@@ -21,7 +20,6 @@ class BitcoinExchange {
 		~BitcoinExchange(void);
 		BitcoinExchange&	operator=(const BitcoinExchange &other);
 		void	processFile(const std::string &path);
-		void	execute(void);
 
 
 };
