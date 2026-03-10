@@ -29,7 +29,6 @@ int main(int ac, char **av) {
 	BitcoinExchange newRef;
 	// std:: cout << "** Loading the data.txt file **\n";
 	newRef.processFile(av[1]);
-	newRef.execute();
 	// std::cout << "Finished the work\n";
 	return (0);
 }

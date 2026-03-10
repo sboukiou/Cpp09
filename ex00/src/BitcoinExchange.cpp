@@ -1,5 +1,4 @@
 #include "../include/BitcoinExchange.hpp"
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 BitcoinExchange::BitcoinExchange(void): fileName("./assets/data.csv") {
@@ -24,7 +23,7 @@ BitcoinExchange&	BitcoinExchange::operator=(const BitcoinExchange &other) {
 }
 
 void	BitcoinExchange::loadDataBase(void) {
-	std::ifstream file("./assets/data.csv");
+	std::ifstream file(fileName.c_str());
 	std::string buffer("");
 	if (file.is_open() == false)
 		throw(std::runtime_error("Could not open the DB file\n"));
@@ -50,18 +49,10 @@ void	BitcoinExchange::processFile(const std::string &path) {
 		if (buffer == "date | value")
 			continue ;
 		try {
-			processLine(data, buffer, DATA);
+			processLine(ref, buffer, DATA);
 		}
 		catch (std::exception &e) {
 			std::cout << "Error:" << e.what() << std::endl;
 		}
-	}
-}
-
-void BitcoinExchange::execute(void) {
-	std::map<std::string, double>::iterator iter = ref.begin();
-	while (iter != ref.end()) {
-		std::cout << iter->first << " => " << iter->second << " = "  << iter->second * data[iter->first] << std::endl;
-		++iter;
 	}
 }

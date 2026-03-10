@@ -1,4 +1,5 @@
 #include "../include/BitcoinExchange.hpp"
+#include <iostream>
 #include <stdexcept>
 #include <cstdlib>
 
@@ -14,7 +15,7 @@ static void	parseDate(std::string &date,
 	for (size_t i = 0; i < year.length(); i += 1)
 		if (std::isdigit(year[i]) == false)
 		throw(std::runtime_error("Invalid year"));
-	if (year > "2025" || year < "2000")
+	if (year > "2026" || year < "2000")
 		throw(std::runtime_error("Year out of range"));
 	year = month;
 	split(month, day, year, '-');
@@ -24,7 +25,7 @@ static void	parseDate(std::string &date,
 		throw(std::runtime_error("Invalid month | day"));
 	if (month > "12")
 		throw(std::runtime_error("Invalid month | day"));
-	if (month > "30")
+	if (day > "30")
 		throw(std::runtime_error("Invalid month | day"));
 
 	for (size_t i = 0; i < month.length(); i += 1)
@@ -72,5 +73,10 @@ void	processLine(std::map<std::string, double> &ref, std::string buffer, Type ty
 	trim(value);
 	parseDate(date, ref);
 	parseValue(value, numValue);
-	ref[date] = numValue;
+	if (type == DATA) {
+		std::cout << date << " ==> " << value << " = " << numValue * ref[date] << std::endl;
+	}
+	else {
+		ref[date] = numValue;
+	}
 }
