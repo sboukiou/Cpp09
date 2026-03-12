@@ -8,7 +8,7 @@ void split(std::string &left, std::string &right, std::string &src, char delim) 
 	size_t	start = 0;
 	size_t	end = src.find(delim);
 	if (end == std::string::npos)
-		throw(std::runtime_error("Found no delimiter\n"));
+		throw(std::runtime_error("bad input"));
 	left = src.substr(start, end - start);
 	right = src.substr(end + 1, src.length() - 1);
 }

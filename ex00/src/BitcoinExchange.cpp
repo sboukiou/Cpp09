@@ -26,7 +26,7 @@ void	BitcoinExchange::loadDataBase(void) {
 	std::ifstream file(fileName.c_str());
 	std::string buffer("");
 	if (file.is_open() == false)
-		throw(std::runtime_error("Could not open the DB file\n"));
+		throw(std::runtime_error("could not open file."));
 	while (std::getline(file, buffer)) {
 		if (buffer == "date,exchange_rate")
 			continue ;
@@ -44,7 +44,7 @@ void	BitcoinExchange::processFile(const std::string &path) {
 	std::ifstream file(path.c_str());
 	std::string buffer("");
 	if (file.is_open() == false)
-		throw(std::runtime_error("Could not open the DB file\n"));
+		throw(std::runtime_error("could not open file."));
 	while (std::getline(file, buffer)) {
 		if (buffer == "date | value")
 			continue ;
