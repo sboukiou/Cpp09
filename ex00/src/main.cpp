@@ -3,25 +3,25 @@
 #include <iostream>
 #include <map>
 #include <stdexcept>
+#include <string>
 #include <cstdlib>
 #include <fstream>
 
-std::ifstream check_args(int ac, char **av) {
+void	 check_args(int ac, char **av) {
 	std::string DBName = "./assets/data.csv";
 	std::ifstream input_file(av[1]);
 	if (input_file.is_open() == false)
 		throw(InvalidArgument("input file!"));
 	else
 		input_file.close();
-	std::ifstream database_file(DBName);
+	std::ifstream database_file(DBName.c_str());
 	std::string line;
 	if (ac != 2)
 		throw(InvalidArgument("Number of arguments is invalid!"));
 	if (database_file.is_open() == false)
 		throw(FileNotOpened(DBName));
-
-	return (database_file);
-
+	database_file.close();
+	input_file.close();
 }
 
 void extract_line_data(std::string &line, std::map<std::string, float> &pairs) {
@@ -30,20 +30,24 @@ void extract_line_data(std::string &line, std::map<std::string, float> &pairs) {
 	float		numKey;
 	size_t idx = 0;
 	size_t len = line.size();
-	while (idx < len && line[idx] != ',')
+	while (idx < len && line[idx] != ',') {
 			value.push_back(line[idx]);
+			idx += 1;
+	}
 	while (idx < len) {
 		key.push_back(line[idx]);
 		idx += 1;
 	}
-	numKey = std::stof(key);
+	numKey = std::atof(key.c_str());
 	pairs.insert(std::pair<std::string, float>(value, numKey));
 }
 
 std::map<std::string, float> load_database(int ac, char **av) {
 	std::map<std::string, float> pairs;
 	std::string line;
-	std::ifstream db_file = check_args(ac, av);
+	std::ifstream db_file(av[1]);
+
+	(void)ac;
 
 	getline(db_file, line);
 	while (getline(db_file, line))
@@ -105,25 +109,27 @@ void parse_key_string(std::string keyStr) {
 }
 
 void	process_input_line(std::string &line, std::map<std::string, float> &db_data) {
-	int delim_idx = line.find('|');
-	int i = 0;
+	size_t delim_idx = line.find('|');
+	size_t i = 0;
 	std::string value("");
-	std::string key("");
+	std::string date("");
 	float numValue;
 
 	if (delim_idx == std::string::npos)
 		throw(InvalidArgument("NO delimiter found, Line is invalid"));
 	while (i < delim_idx) {
+		date.push_back(line[i]);
+		i += 1;
+	}
+	parse_key_string(date);
+	(void)db_data;
+	(void)numValue;
+	i += 1;
+	while (i < line.size()) {
 		value.push_back(line[i]);
 		i += 1;
 	}
 	numValue = parse_value(value);
-	i += 1;
-	while (i < line.size()) {
-		key.push_back(line[i]);
-		i += 1;
-	}
-	parse_key_string(value);
 
 }
 
@@ -132,13 +138,16 @@ void	process_input_file(int ac, char **av) {
 	std::string line;
 	std::string date;
 	std::string value;
+	std::map<std::string, float> input_pairs;
+
+	input_pairs = load_database(ac, av);
 
 	if(input_file.is_open() == false)
 		throw(InvalidArgument("input file!"));
 	getline(input_file, line);
 	while (getline(input_file, line)) {
 		try {
-		//TODO: process_input_line(line);
+			process_input_line(line, input_pairs);
 		}
 		catch (std::exception &err) {
 			std::cout << "ERROR: " << err.what() << std::endl;
@@ -157,14 +166,15 @@ void	process_input_file(int ac, char **av) {
 
 
 int main(int ac, char **av) {
-	std::map<std::string, float> input_pairs;
 
 	try {
 		/* Loading the DB data references */
-		input_pairs = load_database(ac, av);
+		std::cout << "-------------  Start of the program -------------\n";
+		std::cout << "------------- After loading the DB -------------\n";
 
 		/* Processing the input file line at a time */
 		process_input_file(ac, av);
+		std::cout << "------------- After processing the DB -------------\n";
 	}
 	catch (std::runtime_error &err) {
 		std::cerr << "ERROR: " << err.what() << std::endl;
