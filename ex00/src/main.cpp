@@ -58,11 +58,58 @@ std::map<std::string, float> load_database(int ac, char **av) {
 	return (pairs);
 }
 
+float parse_value(std::string &value) {
+	double numVal;
+	char	*endptr;
+
+	numVal = std::strtod(value.c_str(), &endptr);
+	if (numVal == 0)
+		throw(InvalidValue(value));
+	if (endptr != NULL && *endptr)
+		throw(InvalidValue(value));
+	return (numVal);
+}
+
+void parse_key_string(std::string keyStr) {
+	double year;
+	double month;
+	double day;
+	char	*peek;
+	char	*temp;
+
+	year = std::strtod(keyStr.c_str(), &peek);
+	if (year == 0)
+		throw(InvalidDate(keyStr));
+	if (year < 1 || year > 2025)
+		throw(InvalidDate(keyStr));
+	temp = peek;
+	if (temp && *temp)
+		temp += 1;
+	month = std::strtod(temp, &peek);
+	if (month == 0)
+		throw(InvalidDate(keyStr));
+	if (month < 1 && month > 12)
+		throw(InvalidDate(keyStr));
+	temp = peek;
+	if (temp && *temp)
+		temp += 1;
+	day = std::strtod(temp, &peek);
+	if (day == 0)
+		throw(InvalidDate(keyStr));
+	if (day < 1)
+		throw(InvalidDate(keyStr));
+	if (day > 28 && month == 2)
+		throw(InvalidDate(keyStr));
+	if (day > 30)
+		throw(InvalidDate(keyStr));
+}
+
 void	process_input_line(std::string &line, std::map<std::string, float> &db_data) {
 	int delim_idx = line.find('|');
 	int i = 0;
 	std::string value("");
 	std::string key("");
+	float numValue;
 
 	if (delim_idx == std::string::npos)
 		throw(InvalidArgument("NO delimiter found, Line is invalid"));
@@ -70,15 +117,13 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 		value.push_back(line[i]);
 		i += 1;
 	}
-	// TODO: Parse value and check if any errors found
-	// parse_value(value);
+	numValue = parse_value(value);
 	i += 1;
 	while (i < line.size()) {
 		key.push_back(line[i]);
 		i += 1;
 	}
-	// TODO: Parse key string and check if any errors found
-	// parse_key_string(value);
+	parse_key_string(value);
 
 }
 
