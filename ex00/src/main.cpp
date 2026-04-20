@@ -3,32 +3,28 @@
 #include <fstream>
 #include <cstdlib>
 
-typedef struct data {
-	std::string date;
-	long int	value;
-} t_data;
+void check_args(int ac, char **av) {
+}
 
-static void testInput(const int &ac, char **av, std::ifstream &file) {
-	(void)av;
-	(void)file;
-	if (ac != 2)
-		throw(std::runtime_error("ERR: Number of args is invalid"));
+void	process_input_file(int ac, char **av) {
+
 }
 
 int main(int ac, char **av) {
-	std::ifstream 				file;
-	std::string					line;
+	std::map<std::string, float> input_pairs;
+
 	try {
-		testInput(ac, av, file);
+		/* Checking if the input file exists and has text in it */
+		check_args(ac, av);
+
+		/* Loading the DB data references */
+		input_pairs = load_database(ac, av);
+
+		/* Processing the input file line at a time */
+		process_input_file(ac, av);
 	}
-	catch(std::exception &e) {
-		std::cout << e.what() << std::endl;
-		std::exit(0);
+	catch (std::runtime_error &err) {
+		std::cerr << "ERROR: " << err.what() << std::endl;
 	}
-	// std:: cout << "** Loading the DB **\n";
-	BitcoinExchange newRef;
-	// std:: cout << "** Loading the data.txt file **\n";
-	newRef.processFile(av[1]);
-	// std::cout << "Finished the work\n";
 	return (0);
 }
