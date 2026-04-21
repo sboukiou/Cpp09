@@ -74,6 +74,23 @@ float parse_value(std::string &value) {
 	return (numVal);
 }
 
+void validate_days(int year, int month, int day, std::string &keyStr) {
+	if (day < 1 || day > 31)
+		throw(InvalidDate(keyStr));
+	if (month == 2) {
+		if (year % 400) {
+			if (year % 4 && day > 28)
+				throw(InvalidDate(keyStr));
+		}
+		else if (day > 28)
+			throw(InvalidDate(keyStr));
+	}
+	if (month % 1 == 0 && month < 7 && day > 30) // 1 3 5 7 10 12
+			throw(InvalidDate(keyStr));
+	if (month % 1 && month > 7 && day > 30)
+			throw(InvalidDate(keyStr));
+}
+
 void parse_key_string(std::string keyStr) {
 	double year;
 	double month;
@@ -98,14 +115,7 @@ void parse_key_string(std::string keyStr) {
 	if (temp && *temp)
 		temp += 1;
 	day = std::strtod(temp, &peek);
-	if (day == 0)
-		throw(InvalidDate(keyStr));
-	if (day < 1)
-		throw(InvalidDate(keyStr));
-	if (day > 28 && month == 2)
-		throw(InvalidDate(keyStr));
-	if (day > 30)
-		throw(InvalidDate(keyStr));
+	validate_days(year, month, day, keyStr);
 }
 
 void	process_input_line(std::string &line, std::map<std::string, float> &db_data) {
@@ -122,14 +132,13 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 		i += 1;
 	}
 	parse_key_string(date);
-	(void)db_data;
-	(void)numValue;
 	i += 1;
 	while (i < line.size()) {
 		value.push_back(line[i]);
 		i += 1;
 	}
 	numValue = parse_value(value);
+	std::cout << date << " => " << numValue << " = " << numValue * db_data[date] << std::endl;
 
 }
 
