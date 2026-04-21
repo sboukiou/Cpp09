@@ -1,4 +1,4 @@
-#include "../include/exceptions.hpp"
+#include "../include/BitcoinExchange.hpp"
 
 InvalidArgument::InvalidArgument(void): message("Invalid Argument!") {}
 InvalidArgument::~InvalidArgument(void) throw() {}
