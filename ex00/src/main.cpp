@@ -34,6 +34,7 @@ void extract_line_data(std::string &line, std::map<std::string, float> &pairs) {
 			value.push_back(line[idx]);
 			idx += 1;
 	}
+	idx += 1;
 	while (idx < len) {
 		key.push_back(line[idx]);
 		idx += 1;
@@ -45,10 +46,11 @@ void extract_line_data(std::string &line, std::map<std::string, float> &pairs) {
 std::map<std::string, float> load_database(int ac, char **av) {
 	std::map<std::string, float> pairs;
 	std::string line;
-	std::ifstream db_file(av[1]);
+	std::ifstream db_file("./assets/data.csv");
 
+
+	(void)av;
 	(void)ac;
-
 	getline(db_file, line);
 	while (getline(db_file, line))
 		extract_line_data(line, pairs);
@@ -125,6 +127,7 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 	std::string date("");
 	float numValue;
 
+	//std::cout << "Size of loaded DB is again :" << db_data.size() << std::endl;
 	if (delim_idx == std::string::npos)
 		throw(InvalidArgument("NO delimiter found, Line is invalid"));
 	while (i < delim_idx) {
@@ -138,7 +141,9 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 		i += 1;
 	}
 	numValue = parse_value(value);
-	std::cout << date << " => " << numValue << " = " << numValue * db_data[date] << std::endl;
+	std::map<std::string, float>::iterator it;
+	it = db_data.lower_bound(date);
+	std::cout << date << " => " << numValue << " = " << numValue * it->second << std::endl;
 
 }
 
@@ -150,6 +155,8 @@ void	process_input_file(int ac, char **av) {
 	std::map<std::string, float> input_pairs;
 
 	input_pairs = load_database(ac, av);
+	std::cout << "DB Content:\n";
+
 
 	if(input_file.is_open() == false)
 		throw(InvalidArgument("input file!"));
