@@ -23,7 +23,7 @@ static	void process_stack(std::string &expr, std::stack<int> &yard) {
 				yard.push(expr[idx] - '0');
 			}
 			else
-				throw(std::runtime_error("ERROR: Invalid token !\n"));
+				throw(std::runtime_error("Invalid token !\n"));
 		}
 	}
 }
