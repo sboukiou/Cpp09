@@ -1,36 +1,27 @@
-<<<<<<< HEAD
-# include "./RPN.hpp"
-#include <iostream>
-
-
-void testRPN(void) {
-	std::cout << "Testing the RPN module\n";
-}
-=======
 #include "./RPN.hpp"
 
-void	evaluateExp(std::string &var) {
-	std::stack<int> hold;
-	for (size_t i = 0; i < var.length(); i += 1) {
-		if (var[i] == '+' || var[i] == '-' || var[i] == '*' || var[i] == '/') {
-			if (hold.size() < 2)
-				throw(std::runtime_error("Invalid format!"));
-			int right = hold.top();
-			hold.pop();
-			int left = hold.top();
-			if (var[i] == '+')
-				hold.push(right + left);
-			else if (var[i] == '-')
-				hold.push(left - right);
-			else if (var[i] == '*')
-				hold.push(left * right);
-			else if (var[i] == '/')
-				hold.push(left / right);
-		}
-		else if (isdigit(var[i]))
-			hold.push(var[i] - '0');
-	}
-	std::cout << hold.top() << std::endl;
+t_op	is_operator(char op) {
+	if (op == '+')
+		return (PLUS);
+	if (op == '/')
+		return (DIV);
+	if (op == '*')
+		return (MUL);
+	if (op == '-')
+		return (MINUS);
+	return (NIL);
 }
 
->>>>>>> ee22b475ac2e731466f0f0922b0680a55f14bbac
+void	evaluate_expression(int left, int right, t_op op, std::stack<int> &yard) {
+	if (op == PLUS)
+		yard.push(left + right);
+	if (op == MINUS)
+		yard.push(left - right);
+	if (op == MUL)
+		yard.push(left * right);
+	if (op == DIV) {
+		if (right == 0)
+			throw(std::logic_error("Division by zero!"));
+		yard.push(left / right);
+	}
+}

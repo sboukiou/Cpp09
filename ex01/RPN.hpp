@@ -1,18 +1,21 @@
 #ifndef RPN_HPP
 # define RPN_HPP
 
-<<<<<<< HEAD
-#include <vector>
-class RPN {
-	private:
-		std::vector<char> Values;
-};
-=======
 #include <iostream>
 #include <stack>
+#include <stdexcept>
+#include <string>
 
-void	evaluateExp(std::string &var);
->>>>>>> ee22b475ac2e731466f0f0922b0680a55f14bbac
+typedef enum e_op {
+	PLUS,
+	MINUS,
+	MUL,
+	DIV,
+	NIL
+}	t_op;
 
-void testRPN(void);
+
+t_op	is_operator(char op);
+void	evaluate_expression(int left, int right, t_op op, std::stack<int> &yard);
+
 #endif /* RPN_HPP */
