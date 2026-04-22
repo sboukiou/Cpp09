@@ -16,15 +16,18 @@ static void	pair_up(std::vector<int> &numbers, std::vector<int> &winners,
 	}
 }
 
-static void	insert_with_jacob_order(int &value, std::vector<int> &list) {
+static void	insert_with_jacob_order(const int &value, std::vector<int> &list) {
 	size_t left = 0;
-	size_t right = list.size() - 1;
+	size_t right = list.size();
 
+	if (list.empty())
+		return ;
 	while (left < right) {
 		size_t mid = (right + left) / 2;
 		if (list[mid] < value)
 			left = mid + 1;
-		else right = mid;
+		else 
+			right = mid;
 	}
 	list.insert(list.begin() + left, value);
 }
@@ -52,7 +55,14 @@ int main(void) {
 	for (size_t idx = 0; idx < numbers.size(); idx += 1)
 		std::cout << numbers[idx] << " ";
 	std::cout << std::endl;
-	numbers = merge_insert_sort(numbers);
+	if (numbers.size() % 2) {
+		int temp = numbers[numbers.size() - 1];
+		numbers.erase(numbers.end());
+		numbers = merge_insert_sort(numbers);
+		insert_with_jacob_order(temp, numbers);
+	}
+	else
+		numbers = merge_insert_sort(numbers);
 	for (size_t idx = 0; idx < numbers.size(); idx += 1)
 		std::cout << numbers[idx] << " ";
 	std::cout << std::endl;
