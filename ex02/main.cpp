@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 
 static void	pair_up(std::vector<int> &numbers, std::vector<int> &winners,
@@ -20,6 +21,7 @@ static void	insert_with_jacob_order(const int &value, std::vector<int> &list) {
 	size_t left = 0;
 	size_t right = list.size();
 
+	// TODO: IMPLEMENT AND ACTUAL JACOB_STHAL_SEQUENCE !!
 	if (list.empty())
 		return ;
 	while (left < right) {
@@ -37,9 +39,7 @@ std::vector<int>	merge_insert_sort(std::vector<int> &numbers)  {
 	std::vector<int>	losers;
 	if (numbers.size() == 0 || numbers.size() == 1)
 		return (numbers);
-	// TODO: Implement pair up and split to winners + losers
 	pair_up(numbers, winners, losers);
-	// TODO: get the new winners from the next winners;
 	winners = merge_insert_sort(winners);
 	for (size_t idx =0; idx < losers.size(); idx += 1) {
 		insert_with_jacob_order(losers[idx], winners);
@@ -48,10 +48,37 @@ std::vector<int>	merge_insert_sort(std::vector<int> &numbers)  {
 	return (winners);
 }
 
-int main(void) {
-	int arr[] = {12, 44, 1, 23, 2, 99, 13, 22, 87, 44, -77, 34};
+std::vector<int>	parse_input(int ac, char **av) {
+	std::vector<int>	numbers;
+	double				temp;
+	char				*garbage = NULL;
 
-	std::vector<int> numbers(arr, arr + sizeof(arr) / sizeof(arr[0]));
+	if (ac == 1)
+		throw(std::runtime_error("No agruments were provided!"));
+	if (ac == 2)
+		throw(std::runtime_error("Only one number! ALREADY SORTED"));
+	for (int idx = 1; idx < ac; idx += 1) {
+		temp = std::strtod(av[idx], &garbage);
+		if (garbage && *garbage)
+			throw(std::runtime_error("NaN! NOT A NUMBER"));
+		else
+			numbers.push_back(temp);
+	}
+	return (numbers);
+
+}
+
+int main(int ac, char **av) {
+	std::vector<int> numbers;
+
+	//TODO: PARSE INPUT AND FILL THE VECTOR
+	try {
+		numbers = parse_input(ac, av);
+	}
+	catch (std::runtime_error &e) {
+		std::cout << "ERROR: " << e.what() << std::endl;
+		return (1);
+	}
 	for (size_t idx = 0; idx < numbers.size(); idx += 1)
 		std::cout << numbers[idx] << " ";
 	std::cout << std::endl;
