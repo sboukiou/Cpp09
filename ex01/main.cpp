@@ -30,12 +30,13 @@ static	void process_stack(std::string &expr, std::stack<int> &yard) {
 
 int main(int ac, char **av) {
 	std::stack<int> yard;
-	std::string expr(av[1]);
+	std::string expr;
 
 	if (ac != 2) {
 		std::cout << "ERROR: Invalid token !\n";
 		return (1);
 	}
+	expr = std::string(av[1]);
 	try {
 	process_stack(expr, yard);
 	}
