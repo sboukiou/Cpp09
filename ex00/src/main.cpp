@@ -39,7 +39,7 @@ int main(int ac, char **av) {
 		/* Processing the input file line at a time */
 		process_input_file(ac, av);
 	}
-	catch (std::runtime_error &err) {
+	catch (std::exception &err) {
 		std::cerr << "ERROR: " << err.what() << std::endl;
 	}
 	return (0);
