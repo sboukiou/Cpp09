@@ -20,7 +20,6 @@ static void	insert_with_jacob_order(const int &value, std::deque<int> &list) {
 	size_t left = 0;
 	size_t right = list.size();
 
-	// TODO: IMPLEMENT AND ACTUAL JACOB_STHAL_SEQUENCE !!
 	if (list.empty())
 		return ;
 	while (left < right) {
@@ -55,7 +54,7 @@ static std::deque<int>	parse_input(int ac, char **av) {
 	if (ac == 1)
 		throw(std::runtime_error("No agruments were provided!"));
 	if (ac == 2)
-		throw(std::runtime_error("Only one number! ALREADY SORTED"));
+		throw(std::runtime_error("Only one Argument!"));
 	for (int idx = 1; idx < ac; idx += 1) {
 		temp = std::strtod(av[idx], &garbage);
 		if (garbage && *garbage)
@@ -75,6 +74,7 @@ void	sort_with_deque(int ac, char **av) {
 	std::deque<int>	numbers;
 
 	numbers = parse_input(ac, av);
+	std::cout << "----------------- Sorting with Deque -----------------\n";
 	gettimeofday(&time_begin, NULL);
 	time_begin_usec = time_begin.tv_sec * 1000000 + time_begin.tv_usec;
 	if (numbers.size() % 2) {
