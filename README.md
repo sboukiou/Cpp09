@@ -22,6 +22,9 @@
 <br>
 
 ## Resources:
+[C++ Containers Types](https://www.geeksforgeeks.org/cpp/containers-cpp-stl/)\
+[Merge Insertion sort TC](https://warwick.ac.uk/fac/sci/dcs/teaching/material-archive/cs341/fj.pdf)\
+[Ford-Johnson Algorithm in details](https://grokipedia.com/page/Merge-insertion_sort)
 
 
 
