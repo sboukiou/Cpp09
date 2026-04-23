@@ -7,11 +7,7 @@
 #include <sys/time.h>
 
 
-void	sort_vector(std::vector<int> &numbers);
-std::vector<int>	parse_input(int ac, char **av);
-std::vector<int>	merge_insert_sort(std::vector<int> &numbers);
-void	insert_with_jacob_order(const int &value, std::vector<int> &list);
-void	pair_up(std::vector<int> &numbers, std::vector<int> &winners,
-	std::vector<int> &losers);
+void	sort_with_deque(int ac, char **av);
+void	sort_with_vector(int ac, char **av);
 
 #endif

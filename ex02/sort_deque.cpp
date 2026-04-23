@@ -1,8 +1,9 @@
 #include "./main.hpp"
+#include <deque>
 
 
-static void	pair_up(std::vector<int> &numbers, std::vector<int> &winners,
-		std::vector<int> &losers) {
+static void	pair_up(std::deque<int> &numbers, std::deque<int> &winners,
+		std::deque<int> &losers) {
 	for (size_t idx = 0; idx < numbers.size() - 1; idx += 2) {
 		if (numbers[idx] >= numbers[idx + 1]) {
 			winners.push_back(numbers[idx]);
@@ -15,7 +16,7 @@ static void	pair_up(std::vector<int> &numbers, std::vector<int> &winners,
 	}
 }
 
-static void	insert_with_jacob_order(const int &value, std::vector<int> &list) {
+static void	insert_with_jacob_order(const int &value, std::deque<int> &list) {
 	size_t left = 0;
 	size_t right = list.size();
 
@@ -32,9 +33,9 @@ static void	insert_with_jacob_order(const int &value, std::vector<int> &list) {
 	list.insert(list.begin() + left, value);
 }
 
-static std::vector<int>	merge_insert_sort(std::vector<int> &numbers)  {
-	std::vector<int>	winners;
-	std::vector<int>	losers;
+static std::deque<int>	merge_insert_sort(std::deque<int> &numbers)  {
+	std::deque<int>	winners;
+	std::deque<int>	losers;
 	if (numbers.size() == 0 || numbers.size() == 1)
 		return (numbers);
 	pair_up(numbers, winners, losers);
@@ -46,8 +47,8 @@ static std::vector<int>	merge_insert_sort(std::vector<int> &numbers)  {
 	return (winners);
 }
 
-std::vector<int>	parse_input(int ac, char **av) {
-	std::vector<int>	numbers;
+static std::deque<int>	parse_input(int ac, char **av) {
+	std::deque<int>	numbers;
 	double				temp;
 	char				*garbage = NULL;
 
@@ -66,12 +67,12 @@ std::vector<int>	parse_input(int ac, char **av) {
 
 }
 
-void	sort_with_vector(int ac, char **av) {
+void	sort_with_deque(int ac, char **av) {
 	struct timeval	time_begin;
 	struct timeval	time_end;
 	long	long	time_begin_usec;
 	long	long	time_end_usec;
-	std::vector<int>		numbers;
+	std::deque<int>	numbers;
 
 	numbers = parse_input(ac, av);
 	gettimeofday(&time_begin, NULL);

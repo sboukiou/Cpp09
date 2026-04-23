@@ -2,16 +2,22 @@
 
 
 int main(int ac, char **av) {
-	std::vector<int> numbers;
 
-
+	std::cout << "----------------- Sorting with vector -----------------\n";
 	try {
-		numbers = parse_input(ac, av);
+		sort_with_vector(ac, av);
 	}
 	catch (std::runtime_error &e) {
 		std::cout << "ERROR: " << e.what() << std::endl;
 		return (1);
 	}
-	sort_vector(numbers);
+	std::cout << "----------------- Sorting with Deque -----------------\n";
+	try {
+		sort_with_deque(ac, av);
+	}
+	catch (std::runtime_error &e) {
+		std::cout << "ERROR: " << e.what() << std::endl;
+		return (1);
+	}
 	return (0);
 }
