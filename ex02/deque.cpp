@@ -1,8 +1,10 @@
+
 #include "./main.hpp"
 #include <climits>
+#include <deque>
 
-static std::vector<std::pair<int, int> >	create_pairs(std::vector<int> &main) {
-	std::vector<std::pair<int, int> >	pairs;
+static std::deque<std::pair<int, int> >	create_pairs(std::deque<int> &main) {
+	std::deque<std::pair<int, int> >	pairs;
 	std::pair<int, int>						couple;
 
 	for (size_t	i =0; i < main.size() - 1; i += 2) {
@@ -15,8 +17,8 @@ static std::vector<std::pair<int, int> >	create_pairs(std::vector<int> &main) {
 	return (pairs);
 }
 
-static std::vector<int>	extract_main_elements(std::vector<std::pair<int, int> > &pairs) {
-	std::vector<int>	main;
+static std::deque<int>	extract_main_elements(std::deque<std::pair<int, int> > &pairs) {
+	std::deque<int>	main;
 
 	for (size_t i =0; i < pairs.size(); i += 1) {
 		main.push_back(pairs[i].first);
@@ -24,8 +26,8 @@ static std::vector<int>	extract_main_elements(std::vector<std::pair<int, int> > 
 	return (main);
 }
 
-static std::vector<int>	generate_jacob_seq(size_t size) {
-	std::vector<int>	jacob_seq;
+static std::deque<int>	generate_jacob_seq(size_t size) {
+	std::deque<int>	jacob_seq;
 
 	jacob_seq.push_back(0);
 	jacob_seq.push_back(1);
@@ -40,14 +42,14 @@ static std::vector<int>	generate_jacob_seq(size_t size) {
 
 
 
-static int	fetch_pair(int value, std::vector<std::pair<int, int> > &ref) {
+static int	fetch_pair(int value, std::deque<std::pair<int, int> > &ref) {
 	for (size_t i = 0; i < ref.size();i += 1)
 		if (ref[i].first == value)
 			return (ref[i].second);
 	return (value);
 }
 
-static void	binary_search_insert(std::vector<int> &main, int pair) {
+static void	binary_search_insert(std::deque<int> &main, int pair) {
 	size_t left = 0;
 	size_t right = main.size();
 
@@ -62,12 +64,12 @@ static void	binary_search_insert(std::vector<int> &main, int pair) {
 }
 
 
-static void	jacob_seq_insert(std::vector<int> &main,
-		std::vector<std::pair<int, int> > &ref) {
-	std::vector<int>	jacob;
-	std::vector<int>	insertion_addrs;
+static void	jacob_seq_insert(std::deque<int> &main,
+		std::deque<std::pair<int, int> > &ref) {
+	std::deque<int>	jacob;
+	std::deque<int>	insertion_addrs;
 	size_t				main_size = main.size();
-	std::vector<int>	losers;
+	std::deque<int>	losers;
 
 	if (main.empty() || ref.empty())
 		return ;
@@ -92,9 +94,9 @@ static void	jacob_seq_insert(std::vector<int> &main,
 		binary_search_insert(main, losers[i]);
 }
 
-std::vector<int>	merge_insertion_sort_vector(std::vector<int> &nums) {
-	std::vector<int>	main;
-	std::vector<std::pair<int, int> >	ref;
+std::deque<int>	merge_insertion_sort_deque(std::deque<int> &nums) {
+	std::deque<int>	main;
+	std::deque<std::pair<int, int> >	ref;
 	int					hold;
 
 	hold = INT_MIN;
@@ -107,7 +109,7 @@ std::vector<int>	merge_insertion_sort_vector(std::vector<int> &nums) {
 
 	ref = create_pairs(nums);
 	main = extract_main_elements(ref);
-	main = merge_insertion_sort_vector(main);
+	main = merge_insertion_sort_deque(main);
 	jacob_seq_insert(main, ref);
 	if (hold != INT_MIN)
 		binary_search_insert(main, hold);

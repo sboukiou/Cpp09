@@ -26,10 +26,20 @@ void	sort_with_vector(int ac, char **av) {
 	std::vector<int>	numbers;
 	std::vector<int> result;
 
+	struct timeval	time_begin;
+	struct timeval	time_end;
+	long	long	time_begin_usec;
+	long	long	time_end_usec;
+
 	numbers = parse_input(ac, av);
 	std::cout << "----------------- Sorting with Vector -----------------\n";
-	result = merge_insertion_sort(numbers);
+	gettimeofday(&time_begin, NULL);
+	time_begin_usec = time_begin.tv_sec * 1000000 + time_begin.tv_usec;
+	result = merge_insertion_sort_vector(numbers);
 	for (size_t i = 0; i < result.size(); i += 1)
 		std::cout << result[i] << " ";
 	std::cout << std::endl;
+	gettimeofday(&time_end, NULL);
+	time_end_usec = time_end.tv_sec * 1000000 + time_end.tv_usec;
+	std::cout << "\n--- it took " << time_end_usec - time_begin_usec << " u-seconds ---\n";
 }

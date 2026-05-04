@@ -67,26 +67,21 @@ static std::deque<int>	parse_input(int ac, char **av) {
 }
 
 void	sort_with_deque(int ac, char **av) {
+	std::deque<int>	numbers;
+	std::deque<int> result;
+
 	struct timeval	time_begin;
 	struct timeval	time_end;
 	long	long	time_begin_usec;
 	long	long	time_end_usec;
-	std::deque<int>	numbers;
 
 	numbers = parse_input(ac, av);
-	std::cout << "----------------- Sorting with Deque -----------------\n";
+	std::cout << "----------------- Sorting with Vector -----------------\n";
 	gettimeofday(&time_begin, NULL);
 	time_begin_usec = time_begin.tv_sec * 1000000 + time_begin.tv_usec;
-	if (numbers.size() % 2) {
-		int temp = numbers[numbers.size() - 1];
-		numbers.erase(numbers.end());
-		numbers = merge_insert_sort(numbers);
-		insert_with_jacob_order(temp, numbers);
-	}
-	else
-		numbers = merge_insert_sort(numbers);
-	for (size_t idx = 0; idx < numbers.size(); idx += 1)
-		std::cout << numbers[idx] << " ";
+	result = merge_insertion_sort_deque(numbers);
+	for (size_t i = 0; i < result.size(); i += 1)
+		std::cout << result[i] << " ";
 	std::cout << std::endl;
 	gettimeofday(&time_end, NULL);
 	time_end_usec = time_end.tv_sec * 1000000 + time_end.tv_usec;

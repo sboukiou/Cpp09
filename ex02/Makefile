@@ -1,7 +1,7 @@
 NAME=PmergeMe
 CXX=c++
 CPPFLAGS=-Wall -Werror -Wextra -std=c++98
-SRC=vect.cpp main.cpp sort_vector.cpp sort_deque.cpp
+SRC=vect.cpp deque.cpp main.cpp sort_vector.cpp sort_deque.cpp
 OBJ=$(SRC:%.cpp=%.o)
 RM=rm -f
 
