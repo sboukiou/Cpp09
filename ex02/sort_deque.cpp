@@ -2,49 +2,6 @@
 #include <deque>
 
 
-static void	pair_up(std::deque<int> &numbers, std::deque<int> &winners,
-		std::deque<int> &losers) {
-	for (size_t idx = 0; idx < numbers.size() - 1; idx += 2) {
-		if (numbers[idx] >= numbers[idx + 1]) {
-			winners.push_back(numbers[idx]);
-			losers.push_back(numbers[idx + 1]);
-		}
-		else  {
-			winners.push_back(numbers[idx + 1]);
-			losers.push_back(numbers[idx]);
-		}
-	}
-}
-
-static void	insert_with_jacob_order(const int &value, std::deque<int> &list) {
-	size_t left = 0;
-	size_t right = list.size();
-
-	if (list.empty())
-		return ;
-	while (left < right) {
-		size_t mid = (right + left) / 2;
-		if (list[mid] < value)
-			left = mid + 1;
-		else 
-			right = mid;
-	}
-	list.insert(list.begin() + left, value);
-}
-
-static std::deque<int>	merge_insert_sort(std::deque<int> &numbers)  {
-	std::deque<int>	winners;
-	std::deque<int>	losers;
-	if (numbers.size() == 0 || numbers.size() == 1)
-		return (numbers);
-	pair_up(numbers, winners, losers);
-	winners = merge_insert_sort(winners);
-	for (size_t idx =0; idx < losers.size(); idx += 1) {
-		insert_with_jacob_order(losers[idx], winners);
-	}
-
-	return (winners);
-}
 
 static std::deque<int>	parse_input(int ac, char **av) {
 	std::deque<int>	numbers;

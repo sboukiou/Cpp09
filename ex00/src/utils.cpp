@@ -33,7 +33,7 @@ void extract_line_data(std::string &line, std::map<std::string, float> &pairs) {
 		idx += 1;
 	}
 	numKey = std::atof(key.c_str());
-	if (numKey < 0 || numKey > INT_MAX)
+	if (numKey < 0 || (int)numKey > INT_MAX)
 		throw(InvalidValue("Wrong DB asset value!!"));
 	pairs.insert(std::pair<std::string, float>(value, numKey));
 }
@@ -138,7 +138,7 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 	numValue = parse_value(value);
 	if (numValue < 0)
 		throw(InvalidValue("Not a positive Number!"));
-	if (numValue >= INT_MAX)
+	if ((int)numValue >= INT_MAX)
 		throw(InvalidValue("Too large Number!"));
 	std::map<std::string, float>::iterator it;
 	it = db_data.lower_bound(date);
