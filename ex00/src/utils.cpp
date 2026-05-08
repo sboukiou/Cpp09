@@ -138,7 +138,7 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 	numValue = parse_value(value);
 	if (numValue < 0)
 		throw(InvalidValue("Not a positive Number!"));
-	if (numValue >= 10000)
+	if (numValue >= 1000)
 		throw(InvalidValue("Too large Number!"));
 	std::map<std::string, float>::iterator it;
 	it = db_data.lower_bound(date);

@@ -26,6 +26,8 @@ static	void process_stack(std::string &expr, std::stack<int> &yard) {
 				throw(std::runtime_error("Invalid token !\n"));
 		}
 	}
+	if (yard.size() != 1)
+		throw(std::runtime_error("Invalid Args provided!"));
 }
 
 int main(int ac, char **av) {
@@ -33,7 +35,7 @@ int main(int ac, char **av) {
 	std::string expr;
 
 	if (ac != 2) {
-		std::cout << "ERROR: Invalid token !\n";
+		std::cout << "ERROR:  No arguments were provided !\n";
 		return (1);
 	}
 	expr = std::string(av[1]);

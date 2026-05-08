@@ -21,7 +21,7 @@ void	evaluate_expression(int left, int right, t_op op, std::stack<int> &yard) {
 		yard.push(left * right);
 	if (op == DIV) {
 		if (right == 0)
-			throw(std::logic_error("Division by zero!"));
+			throw(std::runtime_error("Division by zero!"));
 		yard.push(left / right);
 	}
 }
