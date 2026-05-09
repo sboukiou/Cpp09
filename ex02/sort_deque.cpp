@@ -33,7 +33,7 @@ void	sort_with_deque(int ac, char **av) {
 	long	long	time_end_usec;
 
 	numbers = parse_input(ac, av);
-	std::cout << "----------------- Sorting with Vector -----------------\n";
+	std::cout << "----------------- Sorting with Deque -----------------\n";
 	gettimeofday(&time_begin, NULL);
 	time_begin_usec = time_begin.tv_sec * 1000000 + time_begin.tv_usec;
 	result = merge_insertion_sort_deque(numbers);
