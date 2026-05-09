@@ -1,4 +1,5 @@
 #include "../include/BitcoinExchange.hpp"
+#include "../include/main.hpp"
 
 void	process_input_file(int ac, char **av) {
 	std::ifstream input_file(av[1]);

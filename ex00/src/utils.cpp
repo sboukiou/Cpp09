@@ -1,4 +1,5 @@
 #include "../include/BitcoinExchange.hpp"
+#include "../include/main.hpp"
 
 void	 check_args(int ac, char **av) {
 	std::string DBName = "./assets/data.csv";
