@@ -1,5 +1,6 @@
 #include "../include/BitcoinExchange.hpp"
 #include "../include/main.hpp"
+#include <cstring>
 
 void	 check_args(int ac, char **av) {
 	std::string DBName = "./assets/data.csv";
@@ -113,6 +114,8 @@ void parse_key_string(std::string keyStr) {
 	if (temp && *temp)
 		temp += 1;
 	day = std::strtod(temp, &peek);
+	if (peek && strlen(peek) > 1)
+		throw(InvalidDate(keyStr));
 	validate_days(year, month, day, keyStr);
 }
 
