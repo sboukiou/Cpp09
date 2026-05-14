@@ -52,7 +52,7 @@ int main(int ac, char **av) {
 		std::cout << "ERROR: Invalid token !\n";
 		return (1);
 	}
-	std::cout << "---    " << result << "    ---\n";
+	std::cout << result << std::endl;
 
 	return (0);
 }
