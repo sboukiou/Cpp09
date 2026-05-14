@@ -33,14 +33,10 @@ void	sort_with_deque(int ac, char **av) {
 	long	long	time_end_usec;
 
 	numbers = parse_input(ac, av);
-	std::cout << "----------------- Sorting with Deque -----------------\n";
 	gettimeofday(&time_begin, NULL);
 	time_begin_usec = time_begin.tv_sec * 1000000 + time_begin.tv_usec;
 	result = merge_insertion_sort_deque(numbers);
-	for (size_t i = 0; i < result.size(); i += 1)
-		std::cout << result[i] << " ";
-	std::cout << std::endl;
 	gettimeofday(&time_end, NULL);
 	time_end_usec = time_end.tv_sec * 1000000 + time_end.tv_usec;
-	std::cout << "\n--- it took " << time_end_usec - time_begin_usec << " u-seconds ---\n";
+	std::cout << "Time to process a range of " << result.size() << " elements with std::vector is " << time_end_usec - time_begin_usec << " us\n";
 }
