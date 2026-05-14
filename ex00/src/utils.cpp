@@ -20,24 +20,22 @@ void	 check_args(int ac, char **av) {
 }
 
 void extract_line_data(std::string &line, std::map<std::string, float> &pairs) {
-	std::string key("");
 	std::string value("");
-	float		numKey;
+	std::string date("");
+	float		numVal;
 	size_t idx = 0;
 	size_t len = line.size();
 	while (idx < len && line[idx] != ',') {
-			value.push_back(line[idx]);
+			date.push_back(line[idx]);
 			idx += 1;
 	}
 	idx += 1;
 	while (idx < len) {
-		key.push_back(line[idx]);
+		value.push_back(line[idx]);
 		idx += 1;
 	}
-	numKey = std::atof(key.c_str());
-	if (numKey < 0 || (int)numKey > INT_MAX)
-		throw(InvalidValue("Wrong DB asset value!!"));
-	pairs.insert(std::pair<std::string, float>(value, numKey));
+	numVal = std::atof(value.c_str());
+	pairs[date] = numVal;
 }
 
 std::map<std::string, float> load_database(int ac, char **av) {
@@ -48,6 +46,8 @@ std::map<std::string, float> load_database(int ac, char **av) {
 
 	(void)av;
 	(void)ac;
+	if (db_file.is_open() == false)
+		throw(IOError("Not opened!"));
 	getline(db_file, line);
 	while (getline(db_file, line))
 		extract_line_data(line, pairs);
@@ -90,7 +90,7 @@ void validate_days(int year, int month, int day, std::string &keyStr) {
 			throw(InvalidDate(keyStr));
 }
 
-void parse_key_string(std::string keyStr) {
+void parse_key_string(std::string &keyStr) {
 	double year;
 	double month;
 	double day;
@@ -117,6 +117,11 @@ void parse_key_string(std::string keyStr) {
 	if (peek && strlen(peek) > 1)
 		throw(InvalidDate(keyStr));
 	validate_days(year, month, day, keyStr);
+	std::string back("");
+	for (size_t i = 0; i < keyStr.size(); i++)
+		if (keyStr[i] != ' ')
+			back.push_back(keyStr[i]);
+	keyStr = back;
 }
 
 void	process_input_line(std::string &line, std::map<std::string, float> &db_data) {
@@ -126,7 +131,6 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 	std::string date("");
 	float numValue;
 
-	//std::cout << "Size of loaded DB is again :" << db_data.size() << std::endl;
 	if (delim_idx == std::string::npos)
 		throw(InvalidArgument("NO delimiter found, Line is invalid"));
 	while (i < delim_idx) {
@@ -145,8 +149,15 @@ void	process_input_line(std::string &line, std::map<std::string, float> &db_data
 	if (numValue >= 1000)
 		throw(InvalidValue("Too large Number!"));
 	std::map<std::string, float>::iterator it;
-	it = db_data.lower_bound(date);
-	std::cout << date << " => " << numValue << " = " << numValue * it->second << std::endl;
+	if (db_data.count(date)) {
+		std::cout << date << " => " << numValue << " = " << numValue * db_data[date] << std::endl;
+	}
+	else {
+		it = db_data.lower_bound(date);
+		if (it == db_data.begin())
+			throw(std::runtime_error("There is no rate exchange for this date!"));
+		it--;
+		std::cout << date << " => " << numValue << " = " << numValue * it->second << std::endl;
+	}
 
 }
-
