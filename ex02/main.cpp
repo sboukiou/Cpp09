@@ -1,5 +1,7 @@
 #include "./main.hpp"
 
+//TODO: Check for duplicates and eliminate them, duplicates --> Invalid input
+//TODO: Format the ouput to look just the same as stated in the subject
 
 int main(int ac, char **av) {
 
