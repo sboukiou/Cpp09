@@ -1,8 +1,9 @@
 #include "./main.hpp"
+#include <algorithm>
 
 
 static std::vector<int>	parse_input(int ac, char **av) {
-	std::vector<int>	numbers;
+	std::vector<int>	numbers(0);
 	double				temp;
 	char				*garbage = NULL;
 
@@ -14,8 +15,9 @@ static std::vector<int>	parse_input(int ac, char **av) {
 		temp = std::strtod(av[idx], &garbage);
 		if (garbage && *garbage)
 			throw(std::runtime_error("NaN! NOT A NUMBER"));
-		else
-			numbers.push_back(temp);
+		if (std::find(numbers.begin(), numbers.end(), temp) != numbers.end())
+			throw(std::runtime_error("Found duplicates!"));
+		numbers.push_back(temp);
 	}
 	return (numbers);
 
